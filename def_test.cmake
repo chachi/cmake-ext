@@ -49,7 +49,7 @@ function(def_test test)
 
     target_link_libraries(${test}
       gtest gtest_main
-      "${test_DEPENDS}"
-      "${test_LINK_LIBS}")
+      ${test_DEPENDS}
+      ${test_LINK_LIBS})
   endif()
 endfunction()

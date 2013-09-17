@@ -44,6 +44,12 @@ function(def_library lib)
 
   if(${cache_var})
     add_library(${lib} ${lib_SOURCES})
-    target_link_libraries(${lib} "${lib_DEPENDS}" "${lib_LINK_LIBS}")
+    if (lib_DEPENDS)
+      target_link_libraries(${lib} ${lib_DEPENDS})
+    endif()
+
+    if (lib_LINK_LIBS)
+      target_link_libraries(${lib} ${lib_LINK_LIBS})
+    endif()
   endif()
 endfunction()
