@@ -47,6 +47,10 @@ function(def_test test)
     add_executable(${test} ${test_SOURCES})
     gtest_add_tests(${test} "" ${test_SOURCES})
 
+    # Always build tests debug so they can be debugged!
+    set_target_properties(${test} PROPERTIES
+      COMPILE_FLAGS "${CMAKE_CXX_FLAGS_DEBUG}")
+
     target_link_libraries(${test}
       gtest gtest_main
       ${test_DEPENDS}
