@@ -21,6 +21,13 @@ function(def_library lib)
   set(cache_var BUILD_${LIB})
   set(${cache_var} ON CACHE BOOL "Enable ${LIB} compilation.")
 
+  set(build_type_cache_var LIB${LIB}_BUILD_TYPE)
+  set(${build_type_cache_var} "" CACHE STRING
+    "Target specific build configuration for lib${lib}")
+
+  string(TOUPPER "${${build_type_cache_var}}" LIB_BUILD_TYPE)
+  set(lib_flags "${CMAKE_CXX_FLAGS} ${CMAKE_C_FLAGS} ${CMAKE_CXX_FLAGS_${LIB_BUILD_TYPE}} ${CMAKE_C_FLAGS_${LIB_BUILD_TYPE}}")
+
   if(lib_CONDITIONS)
     foreach(cond ${lib_CONDITIONS})
       if(NOT ${cond})
@@ -44,6 +51,8 @@ function(def_library lib)
 
   if(${cache_var})
     add_library(${lib} ${lib_SOURCES})
+    set_target_properties(${lib} PROPERTIES COMPILE_FLAGS ${lib_flags})
+
     if (lib_DEPENDS)
       target_link_libraries(${lib} ${lib_DEPENDS})
     endif()
