@@ -53,11 +53,11 @@ function(def_library lib)
     add_library(${lib} ${lib_SOURCES})
     set_target_properties(${lib} PROPERTIES COMPILE_FLAGS ${lib_flags})
 
-    if (lib_DEPENDS)
+    if(lib_DEPENDS)
       target_link_libraries(${lib} ${lib_DEPENDS})
     endif()
 
-    if (lib_LINK_LIBS)
+    if(lib_LINK_LIBS)
       target_link_libraries(${lib} ${lib_LINK_LIBS})
     endif()
   endif()
